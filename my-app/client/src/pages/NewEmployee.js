@@ -4,98 +4,60 @@ import Header from '../components/Header';
 
 const NewEmployee = () => {
   const [employee, setEmployee] = useState({
-    nombres: '',
-    apellidos: '',
-    documento: '',
-    email: '',
-    sueldo: '',
-    fechaInicio: '',
-    fechaFin: '',
-    totalHoras: '',
-    observaciones: '',
+      documento: '',
+      nombres: '',
+      apellidos: '',
+      telefono: '',
+      email: '',
+      cargo: '',
+      area: '',
+      sueldo_base: '',
+      empleador_idempleador: ''
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEmployee({ ...employee, [name]: value });
+      const { name, value } = e.target;
+      setEmployee({
+          ...employee,
+          [name]: value
+      });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aquí puedes agregar la lógica para enviar los datos del nuevo empleado al servidor
-    console.log(employee);
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+          const response = await fetch('http://localhost:5000/create', { // URL del backend
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(employee)
+          });
+
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log('Employee created:', data);
+      } catch (error) {
+          console.error('There was an error creating the employee!', error);
+      }
   };
 
   return (
-    <div>
-      <Header />
-      <h1>Nuevo Empleado</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="nombres"
-          placeholder="Nombres"
-          value={employee.nombres}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="apellidos"
-          placeholder="Apellidos"
-          value={employee.apellidos}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="documento"
-          placeholder="Documento"
-          value={employee.documento}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={employee.email}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="sueldo"
-          placeholder="Sueldo"
-          value={employee.sueldo}
-          onChange={handleChange}
-        />
-        <input
-          type="date"
-          name="fechaInicio"
-          placeholder="Fecha Inicio"
-          value={employee.fechaInicio}
-          onChange={handleChange}
-        />
-        <input
-          type="date"
-          name="fechaFin"
-          placeholder="Fecha Fin"
-          value={employee.fechaFin}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="totalHoras"
-          placeholder="Total Horas"
-          value={employee.totalHoras}
-          onChange={handleChange}
-        />
-        <textarea
-          name="observaciones"
-          placeholder="Observaciones"
-          value={employee.observaciones}
-          onChange={handleChange}
-        />
-        <button type="submit">Guardar</button>
+          <input type="text" name="documento" value={employee.documento} onChange={handleChange} placeholder="Documento" />
+          <input type="text" name="nombres" value={employee.nombres} onChange={handleChange} placeholder="Nombres" />
+          <input type="text" name="apellidos" value={employee.apellidos} onChange={handleChange} placeholder="Apellidos" />
+          <input type="text" name="telefono" value={employee.telefono} onChange={handleChange} placeholder="Teléfono" />
+          <input type="email" name="email" value={employee.email} onChange={handleChange} placeholder="Email" />
+          <input type="text" name="cargo" value={employee.cargo} onChange={handleChange} placeholder="Cargo" />
+          <input type="text" name="area" value={employee.area} onChange={handleChange} placeholder="Área" />
+          <input type="number" name="sueldo_base" value={employee.sueldo_base} onChange={handleChange} placeholder="Sueldo Base" />
+          <input type="text" name="empleador_idempleador" value={employee.empleador_idempleador} onChange={handleChange} placeholder="ID Empleador" />
+          <button type="submit">Crear Empleado</button>
       </form>
-    </div>
   );
 };
 

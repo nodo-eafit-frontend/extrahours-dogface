@@ -1,0 +1,25 @@
+// client/src/styles/_pagination.scss
+
+@import 'variables';
+@import 'mixins';
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    @include button-styles($secondary-color, $text-color);
+
+    &.active {
+      background-color: $primary-color;
+      color: white;
+    }
+
+    &:hover {
+      background-color: lighten($secondary-color, 10%);
+    }
+  }
+}

@@ -1,0 +1,24 @@
+// client/src/styles/_table.scss
+
+@import 'variables';
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: $spacing-unit;
+    border: 1px solid $border-color;
+    text-align: left;
+  }
+
+  th {
+    background-color: $secondary-color;
+    font-size: $font-size-small;
+    color: $text-color;
+  }
+
+  tr:nth-child(even) {
+    background-color: $background-color;
+  }
+}
