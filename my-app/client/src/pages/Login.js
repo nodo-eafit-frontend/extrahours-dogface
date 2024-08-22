@@ -8,7 +8,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica de autenticación
+    
     history.push('/main');
   };
 
